@@ -6,12 +6,11 @@ d3.json('samples.json').then(({names})=>{
 });
 
 function optionChanged() {
-    let sel = d3.select('select').property('value');
     renderData();
 };
 
-let sel = d3.select('select').property('value');
 function renderData() {
+    let sel = d3.select('select').property('value');
 
     d3.json('samples.json').then(({metadata,samples})=>{
 
@@ -57,6 +56,21 @@ function renderData() {
           };
           
           Plotly.newPlot('bubble', bubbleData, layout);
+
+          var gaugeData = [
+            {
+              domain: { x: [0, 1], y: [0, 1] },
+              value: meta.wfreq,
+              title: { text: "<b>Belly Button Wash frequency</b><br>Scrub per week" },
+              type: "indicator",
+              mode: "gauge+number",
+              delta: { reference: 400 },
+              gauge: { axis: { range: [0, 10] } }
+            }
+          ];
+          
+          var layout = { width: 600, height: 400 };
+          Plotly.newPlot('gauge', gaugeData, layout);
 
     });
 };
